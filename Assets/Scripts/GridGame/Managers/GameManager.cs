@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace GridGame.Managers
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameManager : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private SpawnManager spawnManager;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            spawnManager.GenerateGrid();
+        }
     }
 }

@@ -12,12 +12,6 @@ namespace GridGame.Managers
 
         private Tile[,] tiles;
 
-        private void Start()
-        {
-            GenerateGrid();
-        }
-
-        //TODO: Call that function from GameManager
         internal void GenerateGrid()
         {
             tiles = new Tile[gridWidth, gridWidth];
