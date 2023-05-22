@@ -10,12 +10,6 @@ namespace GridGame.Tiles
         private int tileXPosition;
         private int tileYPosition;
         private bool isMatchable;
-        private bool isChecked;
-
-        private Tile upNeighbor;
-        private Tile downNeighbor;
-        private Tile leftNeighbor;
-        private Tile rightNeighbor;
 
         private void OnMouseDown()
         {
@@ -52,16 +46,6 @@ namespace GridGame.Tiles
         internal bool IsMatchable()
         {
             return isMatchable;
-        }
-
-        internal void SetIsChecked(bool check)
-        {
-            isChecked = check;
-        }
-
-        internal bool GetIsCheck()
-        {
-            return isChecked;
         }
     }
 }

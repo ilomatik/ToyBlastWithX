@@ -34,7 +34,7 @@ namespace GridGame.Managers
                 }
             }
 
-            MatchManager.SetTileMatrix(tiles);
+            MatchManager.Instance.SetTileMatrix(tiles);
             int camZPosition = gridWidth >= gridHeight ? gridWidth : gridHeight;
             cam.position = new Vector3(gridWidth / 2f - 0.5f, gridHeight / 2f - 0.5f, camZPosition * -2f);
         }

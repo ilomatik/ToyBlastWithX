@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using GridGame.Tiles;
 using UnityEngine;
@@ -9,7 +8,7 @@ namespace GridGame.Managers
     {
         public static MatchManager Instance;
         
-        private static Tile[,] tileMatrix;
+        private Tile[,] tileMatrix;
         public List<Tile> tileNeighbours;
 
         private void Awake()
@@ -17,7 +16,7 @@ namespace GridGame.Managers
             Instance = this;
         }
 
-        public static void SetTileMatrix(Tile[,] tiles)
+        public void SetTileMatrix(Tile[,] tiles)
         {
             tileMatrix = tiles;
         }
@@ -27,12 +26,18 @@ namespace GridGame.Managers
             tileNeighbours = new List<Tile>();
             Vector2Int[] directions = { Vector2Int.down, Vector2Int.left, Vector2Int.up, Vector2Int.right };
             FindNeighbours(tile);
+
+            if (tileNeighbours.Count >= 3)
+            {
+                foreach (Tile tileNeighbour in tileNeighbours)
+                {
+                    tileNeighbour.ToggleImage();
+                }
+            }
             
             void FindNeighbours(Tile pivotTile)
             {
                 if (!tileNeighbours.Contains(pivotTile)) tileNeighbours.Add(pivotTile);
-                
-                pivotTile.SetIsChecked(true);
                 
                 foreach (Vector2Int direction in directions)
                 {
@@ -51,16 +56,7 @@ namespace GridGame.Managers
                     if (!tempTile.IsMatchable()) continue;
                     
                     tileNeighbours.Add(tempTile);
-                    tileMatrix[tempX, tempY].SetIsChecked(true);
                     FindNeighbours(tempTile);
-                }
-            }
-
-            if (tileNeighbours.Count >= 3)
-            {
-                foreach (Tile tileNeighbour in tileNeighbours)
-                {
-                    tileNeighbour.ToggleImage();
                 }
             }
         }
