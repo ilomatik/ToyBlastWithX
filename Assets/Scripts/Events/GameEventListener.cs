@@ -8,6 +8,7 @@ namespace Events
     {
         public GameEvent Event;
         public UnityEvent Response;
+        public UnityEvent<float> ResponseFloat;
         public UnityEvent<float, float> ResponseFloats;
         public UnityEvent<GameState> ResponseGameState;
         public UnityEvent<Vector3> ResponsePosition;
@@ -25,6 +26,11 @@ namespace Events
         public void OnEventRaised()
         {
             Response.Invoke();
+        }
+
+        public void OnEventFloatRaised(float value)
+        {
+            ResponseFloat.Invoke(value);
         }
 
         public void OnEventFloatsRaised(float firstValue, float secondValue)

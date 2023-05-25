@@ -17,6 +17,14 @@ namespace Events
             }
         }
 
+        public void RaiseFloat(float value)
+        {
+            for (int i = listeners.Count - 1; i >= 0; i--)
+            {
+                listeners[i].OnEventFloatRaised(value);
+            }
+        }
+
         public void RaiseFloats(float firstValue, float secondValue)
         {
             for (int i = listeners.Count - 1; i >= 0; i--)

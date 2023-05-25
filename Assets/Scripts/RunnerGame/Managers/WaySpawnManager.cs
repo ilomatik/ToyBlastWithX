@@ -8,14 +8,17 @@ namespace RunnerGame.Managers
     public class WaySpawnManager : MonoBehaviour
     {
         [SerializeField] private GameObject wayPart;
+        [SerializeField] private float tolerance;
         [SerializeField] private GameEvent onGameStateChange;
         [SerializeField] private GameEvent onSpawnWayPart;
+        [SerializeField] private GameEvent onAlmostPerfectSnap;
 
         public List<GameObject> wayParts = new List<GameObject>();
 
         private GameObject currentWayPart;
         private GameObject lastWayPart;
         private int defaultWayPartCount;
+        private int perfectSnapCounter;
 
         private void OnEnable()
         {
@@ -57,6 +60,16 @@ namespace RunnerGame.Managers
             {
                 onGameStateChange.RaiseGameState(GameState.GameOver);
                 return;
+            }
+
+            if (hangover >= tolerance)
+            {
+                onAlmostPerfectSnap.RaiseFloat(0.05f * perfectSnapCounter);
+                perfectSnapCounter++;
+            }
+            else
+            {
+                perfectSnapCounter = 0;
             }
 
             float newXPosition = (-hangover / 2f) + lastWayPart.transform.position.x;
