@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7101302663899136815}
   - component: {fileID: -8512003768258920269}
   - component: {fileID: -2043918802069193075}
+  - component: {fileID: 773672295191837991}
   m_Layer: 0
   m_Name: WayPart
   m_TagString: Untagged
@@ -141,3 +142,18 @@ MonoBehaviour:
   ResponseFloats:
     m_PersistentCalls:
       m_Calls: []
+  ResponseGameState:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &773672295191837991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7101302663899136814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32fca973f53e48e4aa8fd964c3c2e482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

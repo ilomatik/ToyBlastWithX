@@ -33,6 +33,14 @@ namespace Events
             }
         }
 
+        public void RaisePosition(Vector3 position)
+        {
+            for (int i = listeners.Count - 1; i >= 0; i--)
+            {
+                listeners[i].OnEventPositionRaised(position);
+            }
+        }
+
         public void RegisterListener(GameEventListener listener)
         {
             listeners.Add(listener);

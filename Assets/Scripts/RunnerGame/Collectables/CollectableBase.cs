@@ -1,4 +1,3 @@
-using System.Numerics;
 using UnityEngine;
 
 namespace RunnerGame.Collectables
@@ -7,7 +6,7 @@ namespace RunnerGame.Collectables
     {
         public int amount;
         public GameObject destroyParticle;
-        
+
         public abstract void OnCollect();
         public abstract void OnSpawnParticle(Transform position);
     }

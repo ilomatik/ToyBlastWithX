@@ -10,6 +10,7 @@ namespace Events
         public UnityEvent Response;
         public UnityEvent<float, float> ResponseFloats;
         public UnityEvent<GameState> ResponseGameState;
+        public UnityEvent<Vector3> ResponsePosition;
 
         private void OnEnable()
         {
@@ -34,6 +35,11 @@ namespace Events
         public void OnEventGameStateRaised(GameState gameState)
         {
             ResponseGameState.Invoke(gameState);
+        }
+
+        public void OnEventPositionRaised(Vector3 position)
+        {
+            ResponsePosition.Invoke(position);
         }
     }
 }

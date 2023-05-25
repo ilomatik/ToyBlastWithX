@@ -9,6 +9,7 @@ namespace RunnerGame.Managers
     {
         [SerializeField] private GameObject wayPart;
         [SerializeField] private GameEvent onGameStateChange;
+        [SerializeField] private GameEvent onSpawnWayPart;
 
         public List<GameObject> wayParts = new List<GameObject>();
 
@@ -53,10 +54,12 @@ namespace RunnerGame.Managers
             }
 
             float newXPosition = (-hangover / 2f) + lastWayPart.transform.position.x;
+            var newPos = new Vector3(newXPosition, currentWayPart.transform.position.y,
+                currentWayPart.transform.position.z);
+            onSpawnWayPart.RaisePosition(newPos);
             currentWayPart.transform.localScale = new Vector3(newXSize, currentWayPart.transform.localScale.y,
                 currentWayPart.transform.localScale.z);
-            currentWayPart.transform.position = new Vector3(newXPosition, currentWayPart.transform.position.y,
-                currentWayPart.transform.position.z);
+            currentWayPart.transform.position = newPos;
 
             float partEdge = currentWayPart.transform.position.x + (fallingPartSize * -direction);
             float fallingPartXPosition = partEdge + newXSize * -direction;
