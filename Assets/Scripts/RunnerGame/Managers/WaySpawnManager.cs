@@ -15,8 +15,14 @@ namespace RunnerGame.Managers
 
         private GameObject currentWayPart;
         private GameObject lastWayPart;
+        private int defaultWayPartCount;
 
-        public void SpawnWayPart()
+        private void OnEnable()
+        {
+            defaultWayPartCount = wayParts.Count;
+        }
+
+        private void SpawnWayPart()
         {
             GameObject spawnedWayPart = Instantiate(wayPart,
                 new Vector3(wayPart.transform.position.x, wayPart.transform.position.y, wayParts.Count),
@@ -75,10 +81,25 @@ namespace RunnerGame.Managers
             var part = Instantiate(wayPart.gameObject);
             Destroy(part.GetComponent<WayPartMovement>());
             Destroy(part.GetComponent<GameEventListener>());
+            part.layer = 3;
             part.transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
             part.transform.position = new Vector3(positionX, transform.position.y, positionZ);
             part.AddComponent<Rigidbody>().useGravity = true;
             Destroy(part, 1f);
+        }
+
+        public void OnGameStart(GameState gameState)
+        {
+            if (gameState != GameState.Play) return;
+
+            int temp = wayParts.Count;
+            for (int i = defaultWayPartCount - 1; i < temp; i++)
+            {
+                Destroy(wayParts[defaultWayPartCount - 1]);
+                wayParts.RemoveAt(defaultWayPartCount - 1);
+            }
+            
+            SpawnWayPart();
         }
     }
 }
