@@ -8,10 +8,12 @@ namespace RunnerGame.Managers
     public class WaySpawnManager : MonoBehaviour
     {
         [SerializeField] private GameObject wayPart;
+        [SerializeField] private GameObject emptyWayPart;
         [SerializeField] private float tolerance;
-        [SerializeField] private GameEvent onGameStateChange;
         [SerializeField] private GameEvent onSpawnWayPart;
         [SerializeField] private GameEvent onAlmostPerfectSnap;
+        [SerializeField] private int levelWayAmount;
+        
 
         public List<GameObject> wayParts = new List<GameObject>();
 
@@ -27,6 +29,8 @@ namespace RunnerGame.Managers
 
         private void SpawnWayPart()
         {
+            if (wayParts.Count > levelWayAmount - 1) return;
+            
             GameObject spawnedWayPart = Instantiate(wayPart,
                 new Vector3(wayPart.transform.position.x, wayPart.transform.position.y, wayParts.Count),
                 Quaternion.identity);
@@ -43,9 +47,11 @@ namespace RunnerGame.Managers
             if (wayParts.Count > 1)
             {
                 lastWayPart = wayParts[wayParts.Count - 2];
+                spawnedWayPart.GetComponent<WayPartMovement>().SetPreviousWayPart(lastWayPart);
             }
         }
 
+        //TODO: add comment lines. finish uzaklığını dinamik yap
         public void SnapWayPart(float hangover, float direction)
         {
             if (currentWayPart == null) return;
@@ -58,7 +64,6 @@ namespace RunnerGame.Managers
 
             if (newXSize < 0)
             {
-                onGameStateChange.RaiseGameState(GameState.GameOver);
                 return;
             }
 
@@ -72,18 +77,22 @@ namespace RunnerGame.Managers
                 perfectSnapCounter = 0;
             }
 
-            float newXPosition = (-hangover / 2f) + lastWayPart.transform.position.x;
-            var newPos = new Vector3(newXPosition, currentWayPart.transform.position.y,
-                currentWayPart.transform.position.z);
-            onSpawnWayPart.RaisePosition(newPos);
-            currentWayPart.transform.localScale = new Vector3(newXSize, currentWayPart.transform.localScale.y,
-                currentWayPart.transform.localScale.z);
-            currentWayPart.transform.position = newPos;
+            float newXPosition = (-hangover / 2f)  + lastWayPart.transform.position.x * direction;
+            Vector3 position = currentWayPart.transform.position;
+            var newPos = new Vector3(newXPosition, position.y, position.z);
 
-            float partEdge = currentWayPart.transform.position.x + (fallingPartSize * -direction);
+            onSpawnWayPart.RaisePosition(newPos);
+
+            Vector3 localScale = currentWayPart.transform.localScale;
+            localScale = new Vector3(newXSize, localScale.y, localScale.z);
+            currentWayPart.transform.localScale = localScale;
+            position = newPos;
+            currentWayPart.transform.position = position;
+
+            float partEdge = position.x + (fallingPartSize * -direction);
             float fallingPartXPosition = partEdge + newXSize * -direction;
 
-            SpawnFallingPart(fallingPartXPosition, currentWayPart.transform.position.z, fallingPartSize);
+            SpawnFallingPart(fallingPartXPosition, position.z, fallingPartSize);
             currentWayPart = null;
 
             SpawnWayPart();
@@ -91,14 +100,13 @@ namespace RunnerGame.Managers
 
         private void SpawnFallingPart(float positionX, float positionZ, float scaleX)
         {
-            var part = Instantiate(wayPart.gameObject);
-            Destroy(part.GetComponent<WayPartMovement>());
-            Destroy(part.GetComponent<GameEventListener>());
-            part.layer = 3;
-            part.transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+            GameObject part = Instantiate(emptyWayPart);
+            Vector3 emptyWayPartScale = emptyWayPart.transform.localScale;
+            
+            part.transform.localScale = new Vector3(scaleX, emptyWayPartScale.y,emptyWayPartScale.z);
             part.transform.position = new Vector3(positionX, transform.position.y, positionZ);
-            part.AddComponent<Rigidbody>().useGravity = true;
-            Destroy(part, 1f);
+            
+            Destroy(part, 2f);
         }
 
         public void OnGameStart(GameState gameState)
@@ -111,7 +119,7 @@ namespace RunnerGame.Managers
                 Destroy(wayParts[defaultWayPartCount - 1]);
                 wayParts.RemoveAt(defaultWayPartCount - 1);
             }
-            
+
             SpawnWayPart();
         }
     }

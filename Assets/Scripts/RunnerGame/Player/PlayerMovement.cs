@@ -9,7 +9,7 @@ namespace RunnerGame.Player
         
         private bool isMoving;
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (!isMoving) return;
             
@@ -24,7 +24,7 @@ namespace RunnerGame.Player
 
         public void SetPlayerXPosition(Vector3 position)
         {
-            transform.DOMoveX(position.x, 0.1f).SetEase(Ease.Linear);
+            transform.DOMoveX(position.x, 0.2f).SetEase(Ease.Linear);
         }
     }
 }

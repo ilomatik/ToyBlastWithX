@@ -13,6 +13,10 @@ namespace RunnerGame.Player
             {
                 onGameStateChange.RaiseGameState(GameState.GameOver);
             }
+            else if (collision.transform.CompareTag("Finish"))
+            {
+                onGameStateChange.RaiseGameState(GameState.Won);
+            }
         }
     }
 }

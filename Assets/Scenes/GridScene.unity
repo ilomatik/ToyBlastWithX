@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ca9dfee429ec940853887ba550b2bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridWidth: 5
-  gridHeight: 5
+  gridWidth: 7
+  gridHeight: 7
   tilePrefab: {fileID: 6593107046414969940, guid: e2f5f73b0b0c26e468668fe349eef5a3, type: 3}
   cam: {fileID: 99381477}
 --- !u!4 &422678304

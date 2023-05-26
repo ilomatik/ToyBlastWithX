@@ -4,6 +4,7 @@ namespace RunnerGame
     {
         Start,
         Play, 
-        GameOver
+        GameOver,
+        Won
     }
 }
