@@ -1,6 +1,9 @@
 using DG.Tweening;
 using UnityEngine;
 
+// There was a problem about player prefab. When I add rigidbody component, it was starting to fly.
+// Therefore I used cylinder
+
 namespace RunnerGame.Player
 {
     public class PlayerMovement : MonoBehaviour
