@@ -51,7 +51,6 @@ namespace RunnerGame.Managers
             }
         }
 
-        //TODO: add comment lines. finish uzaklığını dinamik yap
         public void SnapWayPart(float hangover, float direction)
         {
             if (currentWayPart == null) return;
